@@ -1,7 +1,7 @@
 {
-  "name": "chrome-extension-boilerplate-react",
-  "version": "3.3.0",
-  "description": "A chrome extension boilerplate built with React 17 and Webpack 5",
+  "name": "kindleblocks",
+  "version": "1.0.0",
+  "description": "Add kindle exports to notion block storage",
   "license": "MIT",
   "repository": {
     "type": "git",
