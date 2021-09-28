@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 
+import Logs from './components/Logs';
 import Navigation from './components/Navigation';
 import Overview from './components/Overview';
 import PaneRouter from './context/PaneRouter';
@@ -16,7 +17,7 @@ const Popup = () => {
     >
       <div>
         <Navigation />
-        <Overview />
+        {pane.currentPane === 'overview' ? <Overview /> : <Logs />}
       </div>
     </PaneRouter.Provider>
   );
