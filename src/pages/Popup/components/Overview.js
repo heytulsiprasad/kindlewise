@@ -1,5 +1,12 @@
 import React from 'react';
 
+import {
+  Container,
+  Greet,
+  TopContainer,
+  Button,
+} from '../styles/Overview.styles';
+
 /**
  * This is a container file which sends necessary data imports to its
  * corresponding components.
@@ -11,29 +18,13 @@ import React from 'react';
 
 const Overview = () => {
   return (
-    <div>
-      <h2>Good Morning Tulsi 👋</h2>
-      <div>
-        <button>Add highlights</button>
+    <Container>
+      <TopContainer>
+        <Greet>Good Morning Tulsi 👋</Greet>
+        <Button>Add highlights</Button>
         {/* <p>File format not supported. Try adding HTML/CSV format.</p> */}
-      </div>
-      <div>
-        <ul>
-          <li>
-            <h2>12</h2>
-            <h4>Files synced</h4>
-          </li>
-          <li>
-            <h2>68</h2>
-            <h4>Words highlighted</h4>
-          </li>
-          <li>
-            <h2>45</h2>
-            <h4>Time saved</h4>
-          </li>
-        </ul>
-      </div>
-    </div>
+      </TopContainer>
+    </Container>
   );
 };
 

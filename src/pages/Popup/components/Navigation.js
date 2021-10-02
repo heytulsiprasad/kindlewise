@@ -9,7 +9,7 @@ import {
   ButtonContainer,
   Button,
 } from '../styles/Navigation.styles';
-import { HeadingXL, HeadingL } from '../styles/Typography.styles';
+import { HeadingXL } from '../styles/Typography.styles';
 
 const Navigation = () => {
   const { pane, setPane } = useContext(PaneRouter);

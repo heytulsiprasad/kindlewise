@@ -10,6 +10,7 @@ const colors = {
   alert: '#ea6666',
   border: '#e6e7ec',
   borderDark: '#9B9BB6',
+  black: '#000',
 };
 
 export const theme = { colors };
