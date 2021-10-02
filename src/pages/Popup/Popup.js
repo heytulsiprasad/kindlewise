@@ -10,7 +10,7 @@ import { AppContainer, Main } from './styles/global.styles';
 import { theme } from './styles/theme';
 
 const Popup = () => {
-  const [pane, setPane] = useState({ active: 'overview' });
+  const [pane, setPane] = useState({ active: 'logs' });
 
   return (
     <PaneRouter.Provider
