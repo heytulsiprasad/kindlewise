@@ -5,13 +5,13 @@ export const Container = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: space-evenly;
   align-items: center;
 `;
 
 export const Greet = styled.h1`
   color: ${(props) => props.theme.colors.black};
-  font-size: 1.5rem;
+  font-size: 1.6rem;
   text-align: center;
 `;
 
@@ -43,4 +43,11 @@ export const Button = styled.button`
     transition: 0.2s translateY ease;
     transform: translateY(-1px);
   }
+`;
+
+export const AlertText = styled.p`
+  font-size: 1.2rem;
+  color: ${(props) => props.theme.colors.alert};
+  text-align: center;
+  font-weight: 700;
 `;
