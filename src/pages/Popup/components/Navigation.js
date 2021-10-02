@@ -1,6 +1,6 @@
-import React, { useContext } from 'react';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
-import PaneRouter from '../context/PaneRouter';
 import {
   NavContainer,
   NavHeader,
@@ -11,12 +11,15 @@ import {
 } from '../styles/Navigation.styles';
 import { HeadingXL } from '../styles/Typography.styles';
 
-const Navigation = ({ auth, profile }) => {
-  const { pane, setPane } = useContext(PaneRouter);
+const Navigation = () => {
+  const dispatch = useDispatch();
 
-  const setCurrentPane = (tab) => {
-    setPane({ active: tab });
-  };
+  const auth = useSelector((state) => state.auth.isAuthenticated);
+  const active = useSelector((state) => state.location.active);
+  const profile = useSelector((state) => state.auth.profile.image);
+  const name = useSelector((state) => state.auth.profile.name);
+  const updatePage = (page) =>
+    dispatch({ type: 'SET_CURRENT_PAGE', payload: page });
 
   return (
     <NavContainer>
@@ -24,10 +27,7 @@ const Navigation = ({ auth, profile }) => {
         <HeadingXL>Kindlewise</HeadingXL>
         {auth && (
           <Profile>
-            <img
-              src="https://miro.medium.com/max/400/1*B8c1ED3QV_yaa6PAWqDgMw.png"
-              alt="User Profile"
-            />
+            <img src={profile} alt={name} />
           </Profile>
         )}
       </NavHeader>
@@ -35,16 +35,16 @@ const Navigation = ({ auth, profile }) => {
         <NavBottom>
           <ButtonContainer>
             <Button
-              active={pane.active === 'overview'}
-              onClick={() => setCurrentPane('overview')}
+              active={active === 'Overview'}
+              onClick={() => updatePage('Overview')}
             >
               Overview
             </Button>
           </ButtonContainer>
           <ButtonContainer>
             <Button
-              active={pane.active === 'logs'}
-              onClick={() => setCurrentPane('logs')}
+              active={active === 'Logs'}
+              onClick={() => updatePage('Logs')}
             >
               Logs
             </Button>

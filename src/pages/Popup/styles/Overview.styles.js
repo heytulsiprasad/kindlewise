@@ -29,3 +29,15 @@ export const AlertText = styled.p`
   text-align: center;
   font-weight: 700;
 `;
+
+export const LogoutBtn = styled.button`
+  outline: none;
+  border: none;
+  color: ${(props) => props.theme.colors.alert};
+  cursor: pointer;
+  width: max-content;
+  align-self: center;
+  background-color: transparent;
+  font-weight: 700;
+  font-size: 1.2rem;
+`;
