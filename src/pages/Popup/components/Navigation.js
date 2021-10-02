@@ -1,6 +1,15 @@
 import React, { useContext } from 'react';
 
 import PaneRouter from '../context/PaneRouter';
+import {
+  NavContainer,
+  NavHeader,
+  Profile,
+  NavBottom,
+  ButtonContainer,
+  Button,
+} from '../styles/Navigation.styles';
+import { HeadingXL, HeadingL } from '../styles/Typography.styles';
 
 const Navigation = () => {
   const { pane, setPane } = useContext(PaneRouter);
@@ -10,32 +19,35 @@ const Navigation = () => {
   };
 
   return (
-    <nav style={{ border: '1px solid black' }}>
-      <div className="top-container">
-        <h1>Kindlewise</h1>
-        <div>
-          <p>Image goes here</p>
-        </div>
-      </div>
-      <div className="bottom-container">
-        <div>
-          <button
-            style={{ color: pane.active === 'overview' && 'red' }}
+    <NavContainer>
+      <NavHeader>
+        <HeadingXL>Kindlewise</HeadingXL>
+        <Profile>
+          <img
+            src="https://miro.medium.com/max/400/1*B8c1ED3QV_yaa6PAWqDgMw.png"
+            alt="User Profile"
+          />
+        </Profile>
+      </NavHeader>
+      <NavBottom>
+        <ButtonContainer>
+          <Button
+            active={pane.active === 'overview'}
             onClick={() => setCurrentPane('overview')}
           >
             Overview
-          </button>
-        </div>
-        <div>
-          <button
-            style={{ color: pane.active === 'logs' && 'red' }}
+          </Button>
+        </ButtonContainer>
+        <ButtonContainer>
+          <Button
+            active={pane.active === 'logs'}
             onClick={() => setCurrentPane('logs')}
           >
             Logs
-          </button>
-        </div>
-      </div>
-    </nav>
+          </Button>
+        </ButtonContainer>
+      </NavBottom>
+    </NavContainer>
   );
 };
 
