@@ -1,20 +1,16 @@
 import React from 'react';
 
+import { LogBox, HeadingContainer } from '../styles/Logs.styles';
+
 const LogCard = ({ time, title }) => {
   return (
-    <div>
-      <div>
-        <div>
-          <h4>Readlist > {title}</h4>
-        </div>
-        <div>
-          <h6>{time} mins ago</h6>
-        </div>
-      </div>
-      <div>
-        <h2>{title}</h2>
-      </div>
-    </div>
+    <LogBox>
+      <HeadingContainer>
+        <h5>
+          {title}, {time} minutes ago
+        </h5>
+      </HeadingContainer>
+    </LogBox>
   );
 };
 
