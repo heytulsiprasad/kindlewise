@@ -6,7 +6,7 @@ const Navigation = () => {
   const { pane, setPane } = useContext(PaneRouter);
 
   const setCurrentPane = (tab) => {
-    setPane({ currentPane: tab, active: true });
+    setPane({ active: tab });
   };
 
   return (
@@ -20,7 +20,7 @@ const Navigation = () => {
       <div className="bottom-container">
         <div>
           <button
-            style={{ color: pane.currentPane === 'overview' && 'red' }}
+            style={{ color: pane.active === 'overview' && 'red' }}
             onClick={() => setCurrentPane('overview')}
           >
             Overview
@@ -28,7 +28,7 @@ const Navigation = () => {
         </div>
         <div>
           <button
-            style={{ color: pane.currentPane === 'logs' && 'red' }}
+            style={{ color: pane.active === 'logs' && 'red' }}
             onClick={() => setCurrentPane('logs')}
           >
             Logs

@@ -6,7 +6,7 @@ import Overview from './components/Overview';
 import PaneRouter from './context/PaneRouter';
 
 const Popup = () => {
-  const [pane, setPane] = useState({ currentPane: 'overview', active: true });
+  const [pane, setPane] = useState({ active: 'overview' });
 
   return (
     <PaneRouter.Provider
@@ -17,7 +17,7 @@ const Popup = () => {
     >
       <div>
         <Navigation />
-        {pane.currentPane === 'overview' ? <Overview /> : <Logs />}
+        {pane.active === 'overview' ? <Overview /> : <Logs />}
       </div>
     </PaneRouter.Provider>
   );
