@@ -10,15 +10,10 @@ import { AppContainer, Main } from './styles/global.styles';
 import { theme } from './styles/theme';
 
 const Popup = () => {
-  const [pane, setPane] = useState({ active: 'logs' });
+  const [pane, setPane] = useState({ active: 'overview' });
 
   return (
-    <PaneRouter.Provider
-      value={{
-        pane,
-        setPane,
-      }}
-    >
+    <PaneRouter.Provider value={{ pane, setPane }}>
       <ThemeProvider theme={theme}>
         <AppContainer>
           <Navigation />

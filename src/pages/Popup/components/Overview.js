@@ -4,9 +4,9 @@ import {
   Container,
   Greet,
   TopContainer,
-  Button,
   AlertText,
 } from '../styles/Overview.styles';
+import { Button } from '../styles/global.styles';
 
 const Overview = ({ error }) => {
   return (
