@@ -29,7 +29,7 @@ const Popup = () => {
     <PaneRouter.Provider value={{ pane, setPane }}>
       <ThemeProvider theme={theme}>
         <AppContainer>
-          <Navigation />
+          <Navigation auth={false} />
           <Main>{renderPage(pane.active)}</Main>
         </AppContainer>
       </ThemeProvider>
