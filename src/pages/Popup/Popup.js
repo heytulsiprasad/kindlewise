@@ -1,24 +1,25 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { ThemeProvider } from 'styled-components';
+import { useSelector } from 'react-redux';
 
 import Logs from './components/Logs';
 import Navigation from './components/Navigation';
 import Overview from './components/Overview';
 import Auth from './components/Auth';
-import PaneRouter from './context/PaneRouter';
 import { AppContainer, Main } from './styles/global.styles';
 import { theme } from './styles/theme';
 
 const Popup = () => {
-  const [pane, setPane] = useState({ active: 'auth' });
+  const active = useSelector((state) => state.location.active);
+  const auth = useSelector((state) => state.auth.isAuthenticated);
 
   const renderPage = (page) => {
     switch (page) {
-      case 'overview':
+      case 'Overview':
         return <Overview />;
-      case 'logs':
+      case 'Logs':
         return <Logs />;
-      case 'auth':
+      case 'Auth':
         return <Auth />;
       default:
         return <Auth />;
@@ -26,14 +27,12 @@ const Popup = () => {
   };
 
   return (
-    <PaneRouter.Provider value={{ pane, setPane }}>
-      <ThemeProvider theme={theme}>
-        <AppContainer>
-          <Navigation auth={false} />
-          <Main>{renderPage(pane.active)}</Main>
-        </AppContainer>
-      </ThemeProvider>
-    </PaneRouter.Provider>
+    <ThemeProvider theme={theme}>
+      <AppContainer>
+        <Navigation auth={auth} />
+        <Main>{renderPage(active)}</Main>
+      </AppContainer>
+    </ThemeProvider>
   );
 };
 
