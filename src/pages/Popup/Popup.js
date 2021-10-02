@@ -6,7 +6,7 @@ import Navigation from './components/Navigation';
 import Overview from './components/Overview';
 import PaneRouter from './context/PaneRouter';
 
-import { AppContainer } from './styles/global.styles';
+import { AppContainer, Main } from './styles/global.styles';
 import { theme } from './styles/theme';
 
 const Popup = () => {
@@ -22,7 +22,7 @@ const Popup = () => {
       <ThemeProvider theme={theme}>
         <AppContainer>
           <Navigation />
-          {pane.active === 'overview' ? <Overview /> : <Logs />}
+          <Main>{pane.active === 'overview' ? <Overview /> : <Logs />}</Main>
         </AppContainer>
       </ThemeProvider>
     </PaneRouter.Provider>

@@ -39,7 +39,7 @@ export const Button = styled.button`
   outline: none;
   border: none;
   cursor: pointer;
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   font-weight: 700;
   color: ${(props) =>
     props.active ? props.theme.colors.violetDark : props.theme.colors.violet};
