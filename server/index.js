@@ -3,6 +3,8 @@ const cors = require('cors');
 const path = require('path');
 const fileUpload = require('express-fileupload');
 
+const { convert } = require('./utils/index.js');
+
 const app = express();
 
 // Logging middleware
@@ -29,15 +31,17 @@ app.get('/notion-redirect', (req, res) => {
 
 app.post('/upload-file', (req, res) => {
   const htmlInput = req.files.htmlInput;
-  // const htmlInputData = req.files.htmlInput.data.toString('utf8');
+  const htmlInputData = req.files.htmlInput.data.toString('utf8');
 
   if (!req.files || Object.keys(req.files).length === 0) {
     return res.status(400).send('No files were uploaded.');
   }
 
   if (htmlInput.mimetype === 'text/html') {
-    console.log('Received HTML data');
-    // console.log(htmlInputData);
+    const parsedData = convert(htmlInputData);
+    return res.json(parsedData);
+
+    // TODO: Use notion credentials to write the data to notion
   }
 
   return res.json({ result: 'Ok' });
