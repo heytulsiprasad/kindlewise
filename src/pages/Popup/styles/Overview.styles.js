@@ -41,3 +41,14 @@ export const LogoutBtn = styled.button`
   font-weight: 700;
   font-size: 1.2rem;
 `;
+
+export const FormContainer = styled.form`
+  input {
+    width: 0;
+    height: 0;
+    position: absolute;
+    z-index: -1;
+    overflow: hidden;
+    opacity: 0;
+  }
+`;
