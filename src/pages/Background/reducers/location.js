@@ -1,17 +1,20 @@
+import * as aTypes from '../constants';
+
 const initialState = {
   active: 'Auth',
 };
 
 const locationReducer = (state = initialState, { type, payload }) => {
   switch (type) {
-    case 'SET_LOGIN_SUCCESS':
+    case aTypes.SET_LOGIN_SUCCESS:
       return { ...state, active: 'Overview' };
-    case 'SET_CURRENT_PAGE':
+    case aTypes.SET_CURRENT_PAGE:
       return {
         ...state,
         active: payload,
       };
-    case 'SET_LOGOUT_SUCCESS':
+    case aTypes.SET_LOGOUT_SUCCESS:
+    case aTypes.SET_LOGIN_FAILURE:
       return { ...state, active: 'Auth' };
     default:
       return { ...state };
