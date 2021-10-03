@@ -11,7 +11,6 @@ import { theme } from './styles/theme';
 
 const Popup = () => {
   const active = useSelector((state) => state.location.active);
-  const auth = useSelector((state) => state.auth.isAuthenticated);
 
   const renderPage = (page) => {
     switch (page) {
@@ -29,7 +28,7 @@ const Popup = () => {
   return (
     <ThemeProvider theme={theme}>
       <AppContainer>
-        <Navigation auth={auth} />
+        <Navigation />
         <Main>{renderPage(active)}</Main>
       </AppContainer>
     </ThemeProvider>

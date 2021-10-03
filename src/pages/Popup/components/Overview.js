@@ -11,13 +11,13 @@ import {
 import { Button } from '../styles/global.styles';
 
 const Overview = ({ error }) => {
-  const userName = useSelector((state) => state.auth.profile.name);
+  const userName = useSelector((state) => state.auth.profile.workspace_name);
   const dispatch = useDispatch();
 
   return (
     <Container>
       <TopContainer>
-        <Greet>Good Evening, {userName} 👋</Greet>
+        <Greet>Hey, {userName} 👋</Greet>
         <Button>Add highlights</Button>
         {error && (
           <AlertText>

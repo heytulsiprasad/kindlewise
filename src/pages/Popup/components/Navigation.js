@@ -10,28 +10,28 @@ import {
   Button,
 } from '../styles/Navigation.styles';
 import { HeadingXL } from '../styles/Typography.styles';
+import * as aTypes from '../../Background/constants';
 
 const Navigation = () => {
   const dispatch = useDispatch();
 
-  const auth = useSelector((state) => state.auth.isAuthenticated);
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const active = useSelector((state) => state.location.active);
-  const profile = useSelector((state) => state.auth.profile.image);
-  const name = useSelector((state) => state.auth.profile.name);
+  const profile = useSelector((state) => state.auth.profile);
   const updatePage = (page) =>
-    dispatch({ type: 'SET_CURRENT_PAGE', payload: page });
+    dispatch({ type: aTypes.SET_CURRENT_PAGE, payload: page });
 
   return (
     <NavContainer>
       <NavHeader>
         <HeadingXL>Kindlewise</HeadingXL>
-        {auth && (
+        {isAuthenticated && (
           <Profile>
-            <img src={profile} alt={name} />
+            <img src={profile.workspace_icon} alt={profile.workspace_name} />
           </Profile>
         )}
       </NavHeader>
-      {auth && (
+      {isAuthenticated && (
         <NavBottom>
           <ButtonContainer>
             <Button
