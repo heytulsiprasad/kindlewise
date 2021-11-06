@@ -5,14 +5,13 @@ import { Container, Greet, TopContainer } from '../styles/Auth.styles';
 import { Button } from '../styles/global.styles';
 import * as aTypes from '../../Background/constants';
 import { backendUrl } from '../config';
+import { clientId, clientSecret } from '../secrets';
 
 const Auth = () => {
   const dispatch = useDispatch();
 
   const loginWithNotion = () => {
     const baseURL = 'https://api.notion.com/v1/oauth/authorize';
-    const clientId = '519f985f-7114-4732-902e-b31c2020a2d9'; // OAuth client ID
-    const clientSecret = 'secret_1g6LfkbuK4HB7kTy2lDwzF1MmxfAMrRTlK61G7vcZpx'; // OAuth client secret
     const redirectURI = `${backendUrl}/notion-redirect`;
     const responseType = 'code';
     const owner = 'user';
