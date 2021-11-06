@@ -1,14 +1,17 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 
 import LogCard from './LogCard';
 import { LogsContainer } from '../styles/Logs.styles';
 
 const Logs = () => {
+  const logs = useSelector((state) => state.logs.listOfLogs);
+
   return (
     <LogsContainer>
-      <LogCard time={6} title="The Richest Man in Babylon" />
-      <LogCard time={13} title="Think and Grow Rich" />
-      <LogCard time={17} title="12 Rules for Successful Life" />
+      {logs.map((item, idx) => (
+        <LogCard title={item.title} time={item.time} />
+      ))}
     </LogsContainer>
   );
 };
