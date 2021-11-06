@@ -1,3 +1,5 @@
+const { Client } = require('@notionhq/client');
+
 const Converter = require('./converter');
 
 /**
@@ -15,4 +17,164 @@ function convert(contents) {
   throw new Error('Email not in compatible format for parsing');
 }
 
-module.exports = { convert };
+async function addParsedKindleContent(parsedData, authToken) {
+  const notion = new Client({ auth: authToken });
+
+  const { volume, highlights } = parsedData;
+  const title = volume.title;
+  const authors = volume.authors.join(', ');
+
+  const highlightBlocks = [];
+
+  Object.keys(highlights).forEach((chapter) => {
+    // The chapter title
+    highlightBlocks.push(
+      ...[
+        {
+          object: 'block',
+          type: 'heading_3',
+          heading_3: {
+            text: [
+              {
+                type: 'text',
+                text: { content: chapter },
+              },
+            ],
+          },
+        },
+        {
+          object: 'block',
+          type: 'paragraph',
+          paragraph: {
+            text: [
+              {
+                type: 'text',
+                text: { content: '' },
+              },
+            ],
+          },
+        },
+      ]
+    );
+
+    // The highlights from each chapter
+    if (highlights[chapter]) {
+      highlights[chapter].forEach((highlight) => {
+        highlightBlocks.push(
+          ...[
+            {
+              object: 'block',
+              type: 'paragraph',
+              paragraph: {
+                text: [
+                  {
+                    type: 'text',
+                    text: { content: highlight.content },
+                    annotations: {
+                      bold: false,
+                      italic: false,
+                      strikethrough: false,
+                      underline: false,
+                      code: false,
+                      color: `${highlight.color}_background`,
+                    },
+                  },
+                ],
+              },
+            },
+            {
+              object: 'block',
+              type: 'paragraph',
+              paragraph: {
+                text: [
+                  {
+                    type: 'text',
+                    text: { content: '' },
+                  },
+                ],
+              },
+            },
+          ]
+        );
+
+        // If notes exists also add that
+        if (highlight.notes) {
+          highlight.notes.forEach((note) => {
+            highlightBlocks.push(
+              ...[
+                {
+                  object: 'block',
+                  type: 'callout',
+                  callout: {
+                    text: [
+                      {
+                        type: 'text',
+                        text: { content: note.content, link: null },
+                      },
+                    ],
+                    icon: {
+                      type: 'emoji',
+                      emoji: '✍',
+                    },
+                  },
+                },
+                {
+                  object: 'block',
+                  type: 'paragraph',
+                  paragraph: {
+                    text: [
+                      {
+                        type: 'text',
+                        text: { content: '' },
+                      },
+                    ],
+                  },
+                },
+              ]
+            );
+          });
+        }
+      });
+    }
+  });
+
+  try {
+    const response = await notion.blocks.children.append({
+      block_id: 'a518fea2c4764f0983a96ff296bee7b4',
+      children: [
+        {
+          object: 'block',
+          type: 'heading_1',
+          heading_1: {
+            text: [
+              {
+                type: 'text',
+                text: { content: title },
+              },
+            ],
+          },
+        },
+        {
+          object: 'block',
+          type: 'heading_2',
+          heading_2: {
+            text: [
+              {
+                type: 'text',
+                text: { content: authors },
+              },
+            ],
+          },
+        },
+        ...highlightBlocks,
+      ],
+    });
+    console.log(response);
+
+    return response;
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+module.exports = { convert, addParsedKindleContent };
