@@ -41,70 +41,73 @@ Converter.prototype.getJSON = function () {
       title: title,
       authors: authors,
     },
-    highlights: this.highlights(),
+    highlights: this.parseSections(),
   };
 };
 
-/**
- * Parse the highlights and notes from the HTML
- * @returns {Array} highlights
- */
-Converter.prototype.highlights = function () {
-  const headings = this.$('.noteHeading');
-  let highlights = [];
+let globalHighlights = [];
 
-  headings.each((_index, el) => {
-    const heading = this.$(el);
-    const color = heading.find("span[class^='highlight_']").text().trim();
-    const text = heading.text().trim();
+// We've to read from `sectionHeading` then parse within.
+// Need to make another layer of abstraction on top of prototype.highlights
+Converter.prototype.parseSections = function () {
+  const sections = this.$('.sectionHeading');
+  const chapters = {};
 
-    const location = text.match(/\s(\d*)$/i) || '';
+  sections.each((_index, el) => {
+    globalHighlights = [];
 
-    // We need to differentiate between a "highlight" and a "note." The heading
-    // for the latter case doesn't have a color element as a child
-    if (!color && highlights.length) {
-      // We're making the assumption that notes are only added on top of
-      // a highlight. When that's the case, the exported file will include
-      // the note directly after the text it's added on.
-      const highlight = highlights[highlights.length - 1];
-      highlight.notes = this.highlightContent(location[1], color, el);
-    } else {
-      highlights = highlights.concat(
-        this.highlightContent(location[1], color, el)
-      );
+    const sectionHeadingEl = this.$(el);
+    const sectionHeading = sectionHeadingEl.text().trim();
+    const highlights = this.getHighlightsOfCurrentSection(
+      sectionHeadingEl.next()
+    );
+
+    if (!chapters[sectionHeading]) {
+      chapters[sectionHeading] = highlights;
     }
   });
 
-  return highlights;
+  return chapters;
 };
 
 /**
- * Find the next note text after the given element
- * @param  {String} location - The highlight location
- * @param  {String} color
- * @param  {Node} el
- * @return {Array} The parsed highlight objects
+ * Parse the highlights and notes from the HTML until the next sectionHeading
+ * @param {cheerio.Element} el - sectionHeading element
+ * @returns {Array} highlights
  */
-Converter.prototype.highlightContent = function (location, color, el) {
-  let highlights = [];
-  const nextEl = this.$(el).next();
 
-  if (nextEl.hasClass('noteText')) {
-    const highlight = {
-      color: color,
-      content: this.$(nextEl).text().trim(),
-      location: location,
-    };
+Converter.prototype.getHighlightsOfCurrentSection = function (el) {
+  let headingEl = this.$(el);
 
-    highlights.push(highlight);
+  if (headingEl.hasClass('noteHeading')) {
+    do {
+      const color = headingEl.find("span[class^='highlight_']").text().trim();
+      const text = headingEl.text().trim();
 
-    if (nextEl.next().hasClass('noteText'))
-      highlights = highlights.concat(
-        this.highlightContent(location, color, nextEl)
-      );
+      const location = text.match(/\s(\d*)$/i) || '';
+
+      const textEl = this.$(headingEl).next();
+
+      if (textEl.hasClass('noteText')) {
+        const highlight = {
+          color: color,
+          content: this.$(textEl).text().trim(),
+          location: location[1],
+        };
+
+        // If the text is a note then there is no color
+        if (!color) {
+          globalHighlights[globalHighlights.length - 1]['notes'] = [highlight];
+        } else {
+          globalHighlights.push(highlight);
+        }
+      }
+
+      headingEl = this.$(textEl).next();
+    } while (headingEl.next().hasClass('noteText'));
   }
 
-  return highlights;
+  return globalHighlights;
 };
 
 module.exports = Converter;

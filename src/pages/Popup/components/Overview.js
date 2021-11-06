@@ -13,18 +13,21 @@ import { Button } from '../styles/global.styles';
 
 const Overview = ({ error }) => {
   const userName = useSelector((state) => state.auth.profile.workspace_name);
+  const notionToken = useSelector((state) => state.auth.profile.access_token);
+
   const dispatch = useDispatch();
 
   const fileSubmit = async (e) => {
-    console.log(e.target.files);
-
     const file = e.target.files[0];
 
     let formData = new FormData();
-    formData.append('htmlInput', file);
+    formData.append('kindleExport', file);
 
-    const response = await fetch('http://localhost:5000/upload-file', {
+    const response = await fetch('http://localhost:5000/api/upload-file', {
       method: 'POST',
+      headers: {
+        'x-notion-token': notionToken,
+      },
       body: formData,
     });
 

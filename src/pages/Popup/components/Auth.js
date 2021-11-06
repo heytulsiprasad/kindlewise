@@ -10,8 +10,8 @@ const Auth = () => {
 
   const loginWithNotion = () => {
     const baseURL = 'https://api.notion.com/v1/oauth/authorize';
-    const clientId = '519f985f-7114-4732-902e-b31c2020a2d9';
-    const clientSecret = 'secret_1g6LfkbuK4HB7kTy2lDwzF1MmxfAMrRTlK61G7vcZpx';
+    const clientId = '519f985f-7114-4732-902e-b31c2020a2d9'; // OAuth client ID
+    const clientSecret = 'secret_1g6LfkbuK4HB7kTy2lDwzF1MmxfAMrRTlK61G7vcZpx'; // OAuth client secret
     const redirectURI = 'http://localhost:5000/notion-redirect';
     const responseType = 'code';
     const owner = 'user';

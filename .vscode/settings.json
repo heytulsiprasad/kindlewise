@@ -1,4 +1,5 @@
 {
   "editor.formatOnSave": true,
-  "px-to-rem.px-per-rem": 10
+  "px-to-rem.px-per-rem": 10,
+  "discord.enabled": true
 }
