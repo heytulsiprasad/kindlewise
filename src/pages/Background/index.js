@@ -1,21 +1,23 @@
-import { createStore, applyMiddleware } from 'redux';
+import { createStore, applyMiddleware, compose } from 'redux';
 import { wrapStore } from 'webext-redux';
-import logger from 'redux-logger';
+import { createLogger } from 'redux-logger';
 
 import '../../assets/img/icon-34.png';
 import '../../assets/img/icon-128.png';
-import reducer from './reducers';
+import reducer from './reducers/index';
 
 console.log('Kindle blocks — background scripts loaded');
 
-const initialState = {};
+const logger = createLogger({
+  collapsed: true,
+});
+
 const middleware = [logger];
 
 const devTools =
-  process.env.NODE_ENV !== 'production' && applyMiddleware(...middleware);
+  process.env.NODE_ENV !== 'production' &&
+  compose(applyMiddleware(...middleware));
 
-const store = createStore(reducer, initialState, devTools);
-
-store.dispatch({ type: 'DOES_NOTHING_ACTION' });
+const store = createStore(reducer, {}, devTools);
 
 wrapStore(store);

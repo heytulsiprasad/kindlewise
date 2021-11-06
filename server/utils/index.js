@@ -17,7 +17,15 @@ function convert(contents) {
   throw new Error('Email not in compatible format for parsing');
 }
 
-async function addParsedKindleContent(parsedData, authToken) {
+/**
+ * Modify parsed data to match notion block structure and post to notion API
+ * @param {Object} parsedData
+ * @param {string} authToken
+ * @param {string} blockToken
+ * @returns {Object} response
+ */
+
+async function addParsedKindleContent(parsedData, authToken, blockToken) {
   const notion = new Client({ auth: authToken });
 
   const { volume, highlights } = parsedData;
@@ -140,7 +148,7 @@ async function addParsedKindleContent(parsedData, authToken) {
 
   try {
     const response = await notion.blocks.children.append({
-      block_id: 'a518fea2c4764f0983a96ff296bee7b4',
+      block_id: blockToken,
       children: [
         {
           object: 'block',

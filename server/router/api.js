@@ -8,6 +8,7 @@ router.post('/upload-file', async (req, res) => {
   const kindleExport = req.files.kindleExport;
   const kindleExportData = req.files.kindleExport.data.toString('utf8');
   const authToken = req.headers['x-notion-token'];
+  const blockToken = req.headers['x-block-token'];
 
   // When there are no files
   if (!req.files || Object.keys(req.files).length === 0) {
@@ -19,7 +20,11 @@ router.post('/upload-file', async (req, res) => {
     const parsedData = convert(kindleExportData);
 
     // Use notion credentials to write the data to notion
-    const response = await addParsedKindleContent(parsedData, authToken);
+    const response = await addParsedKindleContent(
+      parsedData,
+      authToken,
+      blockToken
+    );
 
     return res.send(response);
   }
