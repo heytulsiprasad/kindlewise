@@ -10,6 +10,7 @@ import {
   FormContainer,
 } from '../styles/Overview.styles';
 import { Button } from '../styles/global.styles';
+import { backendUrl } from '../config';
 
 const Overview = ({ error }) => {
   const userName = useSelector((state) => state.auth.profile.workspace_name);
@@ -21,18 +22,32 @@ const Overview = ({ error }) => {
     const file = e.target.files[0];
 
     let formData = new FormData();
+    let notionPageId = '';
+
     formData.append('kindleExport', file);
 
-    const response = await fetch('http://localhost:5000/api/upload-file', {
-      method: 'POST',
-      headers: {
-        'x-notion-token': notionToken,
-      },
-      body: formData,
-    });
+    chrome.tabs.query(
+      { active: true, lastFocusedWindow: true },
+      async (tabs) => {
+        const currentTab = tabs[0];
 
-    const responseData = await response.json();
-    console.log(responseData);
+        const allPartsOfUrl = currentTab?.url.split('-');
+
+        notionPageId = allPartsOfUrl[allPartsOfUrl?.length - 1];
+        console.log({ notionPageId });
+
+        if (notionPageId) {
+          await fetch(`${backendUrl}/api/upload-file`, {
+            method: 'POST',
+            headers: {
+              'x-notion-token': notionToken,
+              'x-block-token': notionPageId,
+            },
+            body: formData,
+          });
+        }
+      }
+    );
   };
 
   return (
