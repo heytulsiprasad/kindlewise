@@ -6,9 +6,10 @@ const LogCard = ({ time, title }) => {
   return (
     <LogBox>
       <HeadingContainer>
-        <h5>
-          {title}, {time} minutes ago
-        </h5>
+        <h4>{title}</h4>
+        <i>
+          <small>{time}</small>
+        </i>
       </HeadingContainer>
     </LogBox>
   );

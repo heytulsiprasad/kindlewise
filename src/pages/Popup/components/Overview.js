@@ -37,7 +37,7 @@ const Overview = ({ error }) => {
         console.log({ notionPageId });
 
         if (notionPageId) {
-          await fetch(`${backendUrl}/api/upload-file`, {
+          const response = await fetch(`${backendUrl}/api/upload-file`, {
             method: 'POST',
             headers: {
               'x-notion-token': notionToken,
@@ -45,6 +45,12 @@ const Overview = ({ error }) => {
             },
             body: formData,
           });
+
+          const parsedResponse = await response.json();
+
+          if (parsedResponse.title && parsedResponse.time) {
+            dispatch({ type: 'ADD_NEW_LOG', payload: [parsedResponse] });
+          }
         }
       }
     );

@@ -20,11 +20,12 @@ router.post('/upload-file', async (req, res) => {
     const parsedData = convert(kindleExportData);
 
     // Use notion credentials to write the data to notion
-    const response = await addParsedKindleContent(
-      parsedData,
-      authToken,
-      blockToken
-    );
+    // await addParsedKindleContent(parsedData, authToken, blockToken);
+
+    const response = {
+      title: parsedData.volume.title,
+      time: new Date().toDateString(),
+    };
 
     return res.send(response);
   }
