@@ -1,3 +1,7 @@
-Kindlewise will seamlessly add the exports content from kindle to any notion page.
+## Demonstration
 
-As simply as adding any other file embed, but this will resolve to plain Notion blocks instead of embedded files. This stays agnostic to your database structure, properties and stuff b/c all it needs is a page to write text.
+Kindlewise is a chrome extension that uses the HTML file given by kindle when you export your kindle highlights via email and puts it into any notion page you want.
+
+This is a POC designed to help integrate two of my most used apps: Notion and Kindle.
+
+[Link to demo](https://www.youtube.com/watch?v=iwirbhJrvpo)
