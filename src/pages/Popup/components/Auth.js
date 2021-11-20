@@ -5,7 +5,7 @@ import { Container, Greet, TopContainer } from '../styles/Auth.styles';
 import { Button } from '../styles/global.styles';
 import * as aTypes from '../../Background/constants';
 import { backendUrl } from '../config';
-import { clientId, clientSecret } from '../secrets';
+import { clientId } from '../secrets';
 
 const Auth = () => {
   const dispatch = useDispatch();
@@ -32,22 +32,8 @@ const Auth = () => {
     if (window.focus) newWindow.focus();
 
     window.onmessage = async (e) => {
-      if (e.data && e.data.code) {
-        // POST request to get access token
-        const response = await fetch('https://api.notion.com/v1/oauth/token', {
-          method: 'POST',
-          headers: {
-            Authorization: 'Basic ' + btoa(`${clientId}:${clientSecret}`),
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            grant_type: 'authorization_code',
-            code: e.data.code,
-            redirect_uri: redirectURI,
-          }),
-        });
-
-        const responseData = await response.json();
+      if (e.data && e.data.access_token) {
+        const responseData = e.data;
 
         // Closes auth popup window
         newWindow.close();
