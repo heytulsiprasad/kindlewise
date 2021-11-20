@@ -48,6 +48,7 @@ const Overview = ({ error }) => {
 
           const parsedResponse = await response.json();
 
+          // Add book meta data to logs
           if (parsedResponse.title && parsedResponse.time) {
             dispatch({ type: 'ADD_NEW_LOG', payload: [parsedResponse] });
           }
