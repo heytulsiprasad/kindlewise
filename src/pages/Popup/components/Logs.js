@@ -5,7 +5,7 @@ import LogCard from './LogCard';
 import { LogsContainer } from '../styles/Logs.styles';
 
 const Logs = () => {
-  const logs = useSelector((state) => state.logs.listOfLogs);
+  const logs = useSelector((state) => state.logs?.listOfLogs);
 
   return (
     <LogsContainer>

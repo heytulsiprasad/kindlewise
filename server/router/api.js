@@ -18,7 +18,7 @@ router.post('/upload-file', async (req, res) => {
   }
 
   // When uploaded file is of type html
-  if (kindleExport.mimetype === 'text/html') {
+  if (blockToken && kindleExport.mimetype === 'text/html') {
     const parsedData = convert(kindleExportData);
 
     // Use notion credentials to write the data to notion
