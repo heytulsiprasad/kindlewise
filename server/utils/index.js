@@ -177,8 +177,6 @@ async function addParsedKindleContent(parsedData, authToken, blockToken) {
         ...highlightBlocks,
       ],
     });
-    console.log(response);
-
     return response;
   } catch (err) {
     console.error(err);

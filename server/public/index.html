@@ -88,13 +88,33 @@
       const urlSearchParams = new URLSearchParams(window.location.search);
       const params = Object.fromEntries(urlSearchParams.entries());
 
-      // Send to parent browser extension popup
-      // Check if params object isn't empty
+      const redirectURI = 'http://localhost:5000/notion-redirect';
+
+      // Run if params isn't empty
       if (Object.keys(params).length !== 0 && params.constructor === Object) {
-        window.opener.postMessage(
-          params,
-          'chrome-extension://pcgmecodngfcfkllcilngcmpnhfdomco'
-        );
+        (async function () {
+          const response = await fetch(
+            'http://localhost:5000/api/user-credential',
+            {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                grant_type: 'authorization_code',
+                code: params.code,
+                redirect_uri: redirectURI,
+              }),
+            }
+          );
+
+          const responseData = await response.json();
+
+          window.opener.postMessage(
+            responseData,
+            'chrome-extension://pcgmecodngfcfkllcilngcmpnhfdomco'
+          );
+        })();
       }
     </script>
   </body>

@@ -21,3 +21,4 @@
 # secrets
 secrets.*.js
 src/pages/Popup/secrets.js
+*.env
