@@ -32,8 +32,22 @@ const Auth = () => {
     if (window.focus) newWindow.focus();
 
     window.onmessage = async (e) => {
-      if (e.data && e.data.access_token) {
-        const responseData = e.data;
+      if (e.data && e.data.code) {
+        const params = e.data;
+
+        const response = await fetch(`${backendUrl}/api/user-credential`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            grant_type: 'authorization_code',
+            code: params.code,
+            redirect_uri: redirectURI,
+          }),
+        });
+
+        const responseData = await response.json();
 
         // Closes auth popup window
         newWindow.close();
