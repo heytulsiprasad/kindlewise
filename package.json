@@ -3,10 +3,6 @@
   "version": "1.0.0",
   "description": "Add kindle exports to notion block storage",
   "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/lxieyang/chrome-extension-boilerplate-react.git"
-  },
   "scripts": {
     "build": "node utils/build.js",
     "client": "node utils/webserver.js",
