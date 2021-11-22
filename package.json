@@ -8,7 +8,7 @@
     "client": "node utils/webserver.js",
     "prettier": "prettier --write '**/*.{js,jsx,css,html}'",
     "server": "cd server && npm run dev",
-    "start": "cd server && npm run start",
+    "start": "cd server && npm install && npm run start",
     "dev": "run-p client server"
   },
   "dependencies": {
