@@ -33,7 +33,7 @@ app.get('/notion-redirect', (req, res) => {
 const api = require('./router/api');
 app.use('/api', api);
 
-const PORT = 5000 || process.env.PORT;
+const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () =>
   console.log(`Server started listening on http://localhost:${PORT}`)
