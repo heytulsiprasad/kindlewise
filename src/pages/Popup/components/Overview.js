@@ -22,18 +22,17 @@ const Overview = ({ error }) => {
     const file = e.target.files[0];
 
     let formData = new FormData();
-    let notionPageId = '';
 
     formData.append('kindleExport', file);
 
     chrome.tabs.query(
-      { active: true, lastFocusedWindow: true },
-      async (tabs) => {
-        const currentTab = tabs[0];
+      { currentWindow: true, active: true },
+      async function (tabs) {
+        const currentURL = tabs[0].url;
 
-        const allPartsOfUrl = currentTab?.url.split('-');
+        const allPartsOfUrl = currentURL.split('-');
+        const notionPageId = allPartsOfUrl[allPartsOfUrl.length - 1];
 
-        notionPageId = allPartsOfUrl[allPartsOfUrl?.length - 1];
         console.log({ notionPageId });
 
         if (notionPageId) {

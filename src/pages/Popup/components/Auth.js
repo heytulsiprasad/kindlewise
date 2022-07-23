@@ -16,15 +16,19 @@ const Auth = () => {
     const responseType = 'code';
     const owner = 'user';
 
+    const authURL = `${baseURL}?owner=${owner}&client_id=${clientId}&redirect_uri=${encodeURIComponent(
+      redirectURI
+    )}&response_type=${responseType}`;
+
+    console.log({ authURL });
+
     const width = 400;
     const height = 700;
     const posLeft = window.screen.width / 2 - width / 2;
     const posTop = window.screen.height / 2 - height / 2;
 
     const newWindow = window.open(
-      `${baseURL}?client_id=${clientId}&redirect_uri=${encodeURIComponent(
-        redirectURI
-      )}&response_type=${responseType}&owner=${owner}`,
+      authURL,
       'Auth with Notion',
       `height=700, width=400, top=${posTop}, left=${posLeft}`
     );
